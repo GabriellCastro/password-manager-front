@@ -7,6 +7,11 @@ export const passwordService = {
     return response.data;
   },
 
+  getById: async (id: string) => {
+    const response = await api.get<PasswordCardData>(`/password-card/${id}`);
+    return response.data;
+  },
+
   create: async (data: Omit<PasswordCardData, "id">) => {
     const response = await api.post<PasswordCardData>("/password-card", data);
     return response.data;

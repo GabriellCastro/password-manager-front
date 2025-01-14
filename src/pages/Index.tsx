@@ -11,9 +11,7 @@ import { toast } from "sonner";
 export default function Index() {
   const [searchQuery, setSearchQuery] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [editingCard, setEditingCard] = useState<
-    PasswordCardData | undefined
-  >();
+  const [editingCard, setEditingCard] = useState<PasswordCardData | null>();
   const queryClient = useQueryClient();
 
   const { data: passwords = [], isLoading } = useQuery({
@@ -70,8 +68,8 @@ export default function Index() {
     } else {
       await createMutation.mutateAsync(data);
     }
+    setEditingCard(null);
     setDialogOpen(false);
-    setEditingCard(undefined);
   };
 
   const handleEdit = (card: PasswordCardData) => {
@@ -88,7 +86,11 @@ export default function Index() {
       <div className="flex flex-col gap-8">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <h1 className="text-3xl font-bold">Password Manager</h1>
-          <Button onClick={() => setDialogOpen(true)}>
+          <Button
+            onClick={() => {
+              setDialogOpen(true);
+            }}
+          >
             <Plus className="mr-2 h-4 w-4" />
             Add Password
           </Button>
@@ -124,8 +126,8 @@ export default function Index() {
         <PasswordDialog
           open={dialogOpen}
           onOpenChange={(open) => {
+            if (!open) setEditingCard(null);
             setDialogOpen(open);
-            if (!open) setEditingCard(undefined);
           }}
           onSave={handleSave}
           initialData={editingCard}
