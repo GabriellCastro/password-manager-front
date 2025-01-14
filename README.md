@@ -81,7 +81,7 @@ The application includes an API service layer built with Axios for handling HTTP
 1. Clone the repository:
 
 ```bash
-git clone git@github.com:GabriellCastro/password-pals-manager.git
+git clone git@github.com:GabriellCastro/password-manager-front.git
 ```
 
 2. Install dependencies:
